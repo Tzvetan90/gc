@@ -1,0 +1,22 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Wed May 03 15:44:50 2017
+
+@author: Stefano
+"""
+def gcc(s):
+    return 100*(float(s.count('G'))+float(s.count('C')))/float(len(s))
+
+maxval=float(0)
+maxseq=''
+from Bio import SeqIO
+with open('rosalind_gc.txt','r') as inp:
+    with open('output_gc.txt','w') as out:
+        fasta_sequences=SeqIO.parse(inp,'fasta')
+        for fasta in fasta_sequences:
+            name, sequence=fasta.id, str(fasta.seq)
+            gccontent=gcc(sequence)
+            if gccontent>maxval:
+                maxval=gccontent
+                maxname=name
+        out.write(maxname+'\n'+str(maxval))
